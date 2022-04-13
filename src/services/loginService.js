@@ -1,5 +1,14 @@
+require('dotenv').config();
+
+const jwt = require('jsonwebtoken');
 const { Login, User } = require('../models');
 const loginSchema = require('../schemas/loginSchema');
+
+const { SECRET } = process.env;
+
+const jwtConfig = {
+  algorithm: 'HS256',
+};
 
 const statusError = (status, message) => ({
   status,
@@ -21,7 +30,8 @@ const create = async (userData) => {
   if (await getEmailandPassword(userData) === null) throw statusError(400, 'Invalid fields');
 
   const data = await Login.create(userData);
-  return data;
+  const token = jwt.sign({ data }, SECRET, jwtConfig);
+  return token;
 };
 
 module.exports = {
