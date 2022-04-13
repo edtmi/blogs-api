@@ -1,12 +1,12 @@
-const { User } = require('../models');
+const userService = require('../services/userService');
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   try {
-    const userCreated = await User.create(req.body);
+    const userCreated = await userService.create(req.body);
   
     return res.status(201).json(userCreated);  
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 };
 
