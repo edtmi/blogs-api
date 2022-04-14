@@ -28,7 +28,16 @@ const getUsers = async () => {
   return result;
 };
 
+const getUserById = async (id) => {
+  const result = await User.findByPk(id);
+
+  if (!result) throw statusError(404, 'User does not exist');
+
+  return result;
+};
+
 module.exports = {
   create,
   getUsers,
+  getUserById,
 };
