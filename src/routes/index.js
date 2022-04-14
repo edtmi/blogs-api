@@ -5,7 +5,9 @@ const routes = require('express').Router();
 const userRoutes = require('./userRoutes');
 const loginRoutes = require('./loginRoutes');
 
-routes.use('/user', userRoutes);
+const authorization = require('../middlewares/authorization');
+
+routes.use('/user', authorization, userRoutes);
 routes.use('/login', loginRoutes);
 
 module.exports = routes;
