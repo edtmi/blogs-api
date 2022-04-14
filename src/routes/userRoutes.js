@@ -8,6 +8,6 @@ userRoute.route('/')
   .post(userController.create)
   .get(authorization, userController.getUsers);
 
-userRoute.route('/:id').get(userController.getUserById);
+userRoute.route('/:id').get(authorization, userController.getUserById);
 
 module.exports = userRoute;
