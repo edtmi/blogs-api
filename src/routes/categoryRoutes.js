@@ -2,10 +2,8 @@ const categoryRoute = require('express').Router();
 
 const categoryController = require('../controllers/categoryController');
 
-const authorization = require('../middlewares/authorization');
-
 categoryRoute.route('/')
-  .post(authorization, categoryController.create)
-  .get(authorization, categoryController.getCategories);
+  .post(categoryController.create)
+  .get(categoryController.getCategories);
 
 module.exports = categoryRoute;
