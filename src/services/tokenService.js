@@ -7,8 +7,18 @@ const jwtConfig = {
 };
 
 const generateToken = (data) => {
-  const token = jwt.sign({ data }, SECRET, jwtConfig);
+  const { dataValues } = data;
+
+  const token = jwt.sign({ dataValues }, SECRET, jwtConfig);
   return token;
 };
 
-module.exports = generateToken;
+const verifyToken = (token) => {
+  const decoded = jwt.verify(token, SECRET);
+  return decoded;
+};
+
+module.exports = {
+  generateToken,
+  verifyToken,
+};
