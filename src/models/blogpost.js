@@ -4,6 +4,8 @@ const BlogPost = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
+  }, {
+    timestamps: false,
   });
 
   post.associate = (models) => {
@@ -14,6 +16,4 @@ const BlogPost = (sequelize, DataTypes) => {
   return post;
 };
 
-module.exports = {
-  BlogPost,
-};
+module.exports = BlogPost;
