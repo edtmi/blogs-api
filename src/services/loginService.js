@@ -1,6 +1,6 @@
 const { Login, User } = require('../models');
 const loginSchema = require('../schemas/loginSchema');
-const generateToken = require('./tokenService');
+const { generateToken } = require('./tokenService');
 
 const statusError = (status, message) => ({
   status,
