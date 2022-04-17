@@ -47,8 +47,9 @@ const getPostById = async (id) => {
   const result = await BlogPost.findOne({
     include: [
       {
-      model: User,
-      as: 'user',
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
       },
       {
         model: Category,
@@ -56,7 +57,8 @@ const getPostById = async (id) => {
         through: { attributes: [] },
       },
     ],
-    where: { id } });
+    where: { id },
+  });
 
   if (!result) throw statusError(404, 'Post does not exist');
 
