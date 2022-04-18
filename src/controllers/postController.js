@@ -31,8 +31,19 @@ const getPostById = async (req, res, next) => {
   }
 };
 
+const getPostByQueryString = async (req, res, next) => {
+  try {
+    const result = await postService.getPostByQueryString(req.query.q); 
+
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
+  getPostByQueryString,
 };
