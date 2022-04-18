@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const postSchema = require('../schemas/postSchema');
 
@@ -65,8 +66,32 @@ const getPostById = async (id) => {
   return result;
 };
 
+const getPostByQueryString = async (query) => {
+  // Sequelize using 'or' and 'like': https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+  const result = await BlogPost.findAll({ include: [{
+          model: User,
+          as: 'user',
+          attributes: { exclude: ['password'] },
+        },
+        {
+          model: Category,
+          as: 'categories',
+          through: { attributes: [] },
+        }],
+      where: {
+        [Sequelize.Op.or]: [
+            { title: { [Sequelize.Op.like]: `%${query}%` } },
+            { content: { [Sequelize.Op.like]: `%${query}%` } },
+        ],
+      },
+    });
+
+  return result;
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
+  getPostByQueryString,
 };
