@@ -30,8 +30,20 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+const destroy = async (req, res, next) => {
+  try {
+    const { dataValues: { id } } = req.user;
+    await userService.destroy(id);
+  
+    return res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getUsers,
   getUserById,
+  destroy,
 };
