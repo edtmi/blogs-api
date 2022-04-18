@@ -10,4 +10,6 @@ userRoute.route('/')
 
 userRoute.route('/:id').get(authorization, userController.getUserById);
 
+userRoute.route('/me').delete(authorization, userController.destroy);
+
 module.exports = userRoute;
