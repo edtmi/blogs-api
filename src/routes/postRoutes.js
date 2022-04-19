@@ -14,6 +14,7 @@ postRoute.route('/search')
 
 postRoute.route('/:id')
   .get(postController.getPostById)
-  .put(postController.update);
+  .put(postController.update)
+  .delete(postController.destroy);
 
 module.exports = postRoute;
