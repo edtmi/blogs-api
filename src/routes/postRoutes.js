@@ -13,6 +13,7 @@ postRoute.route('/search')
   .get(postController.getPostByQueryString);
 
 postRoute.route('/:id')
-  .get(postController.getPostById);
+  .get(postController.getPostById)
+  .put(postController.update);
 
 module.exports = postRoute;
