@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const postSchema = require('../schemas/postSchema');
+const updatePostSchema = require('../schemas/updatePostSchema');
 
 const statusError = (status, message) => ({
   status,
@@ -89,9 +90,35 @@ const getPostByQueryString = async (query) => {
   return result;
 };
 
+const update = async (blogId, userIdPost, dataPost) => {
+  const { title, content, categoryIds } = dataPost;
+
+  const { error } = updatePostSchema.validate({ title, content });
+  if (error) throw statusError(400, error.message);
+
+  if (categoryIds) throw statusError(400, 'Categories cannot be edited');
+
+  const result = await BlogPost.findByPk(blogId, {
+    include: [
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  if (result.userId !== userIdPost) throw statusError(401, 'Unauthorized user');
+
+  await result.update({ title, content });
+
+  return result;
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
   getPostByQueryString,
+  update,
 };
