@@ -50,10 +50,21 @@ const update = async (req, res, next) => {
   }
 };
 
+const destroy = async (req, res, next) => {
+  try {
+    await postService.destroy(req.params.id, req.user.id);
+
+    return res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
   getPostByQueryString,
   update,
+  destroy,
 };
