@@ -1,4 +1,4 @@
-const { Login, User } = require('../models');
+const { User } = require('../models');
 const loginSchema = require('../schemas/loginSchema');
 const { generateToken } = require('./tokenService');
 
@@ -15,18 +15,18 @@ const getEmailandPassword = async (data) => {
   return result;
 };
 
-const create = async (userData) => {
+const login = async (userData) => {
   const { error } = loginSchema.validate(userData);
   if (error) throw statusError(400, error.message);
 
   if (await getEmailandPassword(userData) === null) throw statusError(400, 'Invalid fields');
 
-  const data = await Login.create(userData);
-  
-  const token = generateToken(data);
+  const result = await getEmailandPassword(userData);
+
+  const token = generateToken({ id: result.id });
   return token;
 };
 
 module.exports = {
-  create,
+  login,
 };
