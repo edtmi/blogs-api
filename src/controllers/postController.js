@@ -2,8 +2,7 @@ const postService = require('../services/postService');
 
 const create = async (req, res, next) => {
   try {
-    const { dataValues: { id } } = req.user;
-    const post = await postService.create(req.body, id);
+    const post = await postService.create(req.body, req.user.id);
   
     return res.status(201).json(post);
   } catch (error) {
@@ -41,9 +40,20 @@ const getPostByQueryString = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const result = await postService.update(req.params.id, req.user.id, req.body);
+    
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
   getPostByQueryString,
+  update,
 };
