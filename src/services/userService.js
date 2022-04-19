@@ -19,9 +19,9 @@ const create = async (userData) => {
 
   if (await getEmail(userData.email)) throw statusError(409, 'User already registered');
 
-  const data = await User.create(userData);
+  const result = await User.create(userData);
 
-  const token = generateToken(data);
+  const token = generateToken({ id: result.id });
   return token;
 };
 
