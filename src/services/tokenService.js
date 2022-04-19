@@ -7,9 +7,7 @@ const jwtConfig = {
 };
 
 const generateToken = (data) => {
-  const { dataValues } = data;
-
-  const token = jwt.sign({ dataValues }, SECRET, jwtConfig);
+  const token = jwt.sign(data, SECRET, jwtConfig);
   return token;
 };
 
