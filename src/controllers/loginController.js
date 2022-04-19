@@ -1,8 +1,8 @@
 const loginService = require('../services/loginService');
 
-const create = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
-    const token = await loginService.create(req.body);
+    const token = await loginService.login(req.body);
   
     return res.status(200).json({ token });  
   } catch (error) {
@@ -11,5 +11,5 @@ const create = async (req, res, next) => {
 };
 
 module.exports = {
-  create,
+  login,
 };
